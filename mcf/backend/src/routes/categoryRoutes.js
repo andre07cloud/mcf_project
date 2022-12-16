@@ -6,19 +6,22 @@
 const express = require("express");
 
 var categoryRouter = express.Router();
-const controller = require('../controllers/categories/categorieControllers')
+const controller = require('../controllers/categories/categorieControllers');
+const uploadFileService = require('../services/uploadFiles');
+  
+const upload = uploadFileService.uploadMiddle();
 
 //Get category list
-categoryRouter.get('/list', controller.all);
+categoryRouter.get('/list', controller.getCategories);
 
 categoryRouter.get('/:id', controller.one);;
 
-categoryRouter.put('/:id', controller.edit);
+categoryRouter.patch('/:id', controller.updateCategory);
 
-categoryRouter.delete('/:id', controller.remove);
+categoryRouter.patch('/delete/:categoryId', controller.remove);
 
 //Create category
-categoryRouter.post('/create', controller.addNewCategory);
+categoryRouter.post('/create', upload.single("image"), controller.addNewCategory);
 
 
 

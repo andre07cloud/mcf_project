@@ -1,17 +1,15 @@
-const cryptoJS = require("crypto-js");
-const Category = require('../../models/categorie');
+
+const Category = require('../../models/category');
+const categoryService = require('../../services/categoryServices');
 
 //CREATE CATEGORY
-
-
 exports.addNewCategory = async (req, res) => {
     
     let newCategory = new Category({
-        designation : req.body.designation,
-        creator: req.body.creator,
-        description: req.body.description
+        title : req.headers.title,
+        image: req.file? "/data/uploads/" + req.file.filename : "/data/uploads/mcf.png"
     });
-    
+    console.log(newCategory)
     try{
         const savedCategory = await newCategory.save();
             console.log(savedCategory)
@@ -26,25 +24,34 @@ exports.addNewCategory = async (req, res) => {
 };
 
 //Get Single category
-exports.one = (req, res) =>{
-    Category.findById(req.params.id, (err, obj) => {
-        
-        res.status(200).json(obj);
-    });
+exports.one = async (req, res) =>{
+    const category = await Category.findById(req.params.id)
+        .populate({path: 'formations', populate: {path: 'sections', populate: {path: 'modules'}}})
+        .populate({path: 'formations', populate: {path: 'assignments', populate: {path: 'userId'}}})
+        .populate({path: 'formations', populate: {path: 'teacher'}});
+
+        res.status(200).json(category);
     
 };
 
 //Delete category
-exports.remove = (req, res) =>{
-    Category.findByIdAndDelete(req.params.id, (err, obj) => {
-        
-        res.status(200).json(obj);
-    });
+exports.remove = async (req, res) =>{
+    console.log(req.params.categoryId)
+    try{
+        const category = await categoryService.deleteCategoryById(req.params.categoryId);
+        res.status(200).json({"message":"Category deleted successfully!!!"});
+    }
+    catch(err){
+        res.status(500).json({"message" : "deleting failed!"});
+    }
+    
     
 };
 //Update category
-exports.edit = async(req, res) =>{
+exports.updateCategory = async(req, res) =>{
     try{
+        console.log(req.body);
+        console.log(req.params.id);
         const updatedCategory = await Category.findByIdAndUpdate(
             req.params.id,
             {
@@ -52,7 +59,8 @@ exports.edit = async(req, res) =>{
             },
             { new: true}
         );
-        res.status(200).json(updatedCategory);
+        console.log(updatedCategory);
+        res.status(200).json({"message":"category updated"});
     } catch(err){
         res.status(500).json(err);
     }
@@ -60,10 +68,11 @@ exports.edit = async(req, res) =>{
 };
 
 //Get All categories
-exports.all = (req, res) =>{
-    Category.find({},(err, obj)  => {
-        console.log(obj);
-        res.status(200).json(obj);
-    });
+exports.getCategories = async (req, res) =>{
+    const categories = await Category.find({deletedAt:null})
+        .populate({path: 'formations', populate: {path: 'sections', populate: {path: 'modules'}}})
+        .populate({path: 'formations', populate: {path: 'assignments', populate: {path: 'userId'}}})
+        .populate({path: 'formations', populate: {path: 'teacher'}});
+    res.status(200).json(categories);
     
 };

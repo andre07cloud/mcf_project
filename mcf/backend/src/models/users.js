@@ -29,6 +29,9 @@ module.exports = UserSchema = new Schema(
             default: Role.ROLE_SUPER_ADMIN, 
             enum:[Role.ROLE_SUPER_ADMIN, Role.ROLE_ADMIN, Role.ROLE_FORMATEUR, Role.ROLE_STAGIAIRE]
         },
+        avatar: {
+            type: String, default:'/data/uploads/mcf.png'
+        },
         active: {
             type: Boolean,
             default: false
@@ -37,8 +40,19 @@ module.exports = UserSchema = new Schema(
             type: Schema.ObjectId,
             ref: 'User'
         },
+        chatSpent: {
+            type: Number,
+            default: 0
+        },
+        assigned: {type: Boolean, default:false},
         courses: {
-            type: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Course' }],
+            type: [
+                {
+                    formationId: { type: mongoose.SchemaTypes.ObjectId, ref: 'Formation', required: false },
+                    launchLink: {type: String, default: ""},
+                    registrationId:{type: String, default:""},
+                },   
+            ],
             required: false,
             default: [],
           },
@@ -60,8 +74,8 @@ module.exports = UserSchema = new Schema(
         resetLink: {
             data: String,
             default: ''
-        }
-
+        },
+        deletedAt : {type:Date, default: null}
     },
     { timestamps: true }
 );

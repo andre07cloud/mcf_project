@@ -4,6 +4,8 @@ const moduleTypes = {
     PDF: 'pdf',
     ARTICLE: 'article',
     DOCUMENT: 'document',
+    EXERCICE: 'exercice',
+    SCORM : 'scorm'
   };
 
   module.exports ={

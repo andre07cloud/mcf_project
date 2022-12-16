@@ -2,16 +2,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-export const ChatSchema = new Schema(
+const ChatSchema = new Schema(
     {
-        user:{
-            type: Schema.ObjectId, ref: 'User'    
+        student:{
+            type: Schema.ObjectId, ref: 'User', required:true    
+        },
+        teacher:{
+            type: Schema.ObjectId, ref: 'User', required:true    
         },
         message:{
             type: String, required:true
-        }
+        },
+        senderId: {
+            type: String, required:true
+        },
+        deletedAt : {type:Date, default: null}
     },
     { timestamps: true }
 );
 
-export const Chats = mongoose.model('Question', ChatSchema);
+module.exports = mongoose.model('Chat', ChatSchema);

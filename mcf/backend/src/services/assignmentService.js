@@ -6,6 +6,17 @@ const Course = require('../models/formations');
 const User = require('../models/users');
 
 
+
+
+
+// APP_NORMAL.username = 'PAscalRossi';
+// APP_NORMAL.password = 'Mcf2022!';
+    // OR
+
+// Configure OAuth2 access token for authorization: OAUTH
+// Note: HTTP basic auth must be configured for the initial call to create an OAuth2 token
+
+
 const getAssignmentsByID = async (courseId) => {
     const course = await Course.findById(courseId).populate('assignments');
     return course;
@@ -48,35 +59,31 @@ const getAssignmentsByID = async (courseId) => {
    * @param {Object} updateBody
    * @returns {Promise<Course>}
    */
-  const addAssignementById = async (courseId, userId) => {
+  const addAssignementById = async (courseId, userId, registrationId) => {
     const course = await Course.findById(courseId);
-    console.log("*****addAssignmentById");
-    console.log(courseId);
-  
+    const user = await User.findById(userId);
     if (!course) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Course not found');
     }
     console.log("*****addAssignmentById firsssssssssssttttt");
     if (course.assignments) {
-      course.assignments.push({ user: userId, beginDate: Date.now() });
+      course.assignments.push({ userId: userId, beginDate: Date.now() });
     } else {
-      course.assignments = [{ user: userId, beginDate: Date.now() }];
+      course.assignments = [{ userId: userId, beginDate: Date.now() }];
     }
-    // const response = await Response.create({ userId, courseId });
   
-    // if (!response) {
-    //   throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Response creation error');
-    // }
-  
-    // if (course.responses) {
-    //   course.responses.push(response.id);
-    // } else {
-    //   course.responses = [response.id];
-    // }
-  
-    await User.findByIdAndUpdate({ _id: userId }, { $addToSet: { courses: courseId } });
+    // await User.findByIdAndUpdate({ _id: userId }, { $addToSet: { courses: courseId } });
+    if(user.courses){
+      user.courses.push({formationId: courseId, launchLink:"", registrationId : registrationId})
+    }
+    else{
+      user.courses = [{formationId: courseId, launchLink:"", registrationId : registrationId}];
+    }
+    user.assigned = true;
+    user.save();
     console.log("*****addAssignmentById----------passed");
     await course.save();
+    console.log("*****addAssignmentById----------saved");
     return course;
   };
   

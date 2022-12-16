@@ -8,8 +8,10 @@ var sectionRouter = express.Router();
 sectionRouter.post('/create/:courseId', controller.createSection);
 sectionRouter.get('/list', controller.getSections);
 sectionRouter.get('/:sectionId', controller.getSection);
+sectionRouter.get('/course/:courseId', controller.getSectionCourseId);
 
-
+sectionRouter.patch('/:sectionId', controller.updateSection);
+sectionRouter.patch('/delete/:sectionId', controller.deleteSection);
 
 
 

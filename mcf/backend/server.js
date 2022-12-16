@@ -8,17 +8,26 @@ const cookieParser = require('cookie-parser');
 const dotenv = require("dotenv").config();
 const connection = require('./db');
 const http = require('http');
+const httpStatus = require('http-status');
+const multer = require('multer');
 
+const fs = require('fs');
+const https = require("https");
 
 //import routes
 const userRouter = require("./src/routes/userRoutes");
 const formationRouter = require("./src/routes/formationRoutes");
 const sectionRouter = require('./src/routes/sectionRoutes');
 const moduleRouter = require('./src/routes/moduleRoutes');
-
+const categoryRouter = require('./src/routes/categoryRoutes');
+const forumRouter = require('./src/routes/forumRoutes');
+const chatRouter = require('./src/routes/chatRoutes');
 //bodyParser
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
+
+//Use all parser utilities
+app.use(express.json({limit: '10000000mb'}));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -32,51 +41,19 @@ let gfs;
 connection();
 
 
+
 // All router app
 app.use('/api/users', userRouter);
 app.use('/api/formations', formationRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/sections', sectionRouter);
 app.use('/api/modules', moduleRouter);
-
-//Web App Port to access web page
-const port = normalizePort('8000');
-app.set('port', port);
-
+app.use('/api/forums', forumRouter);
+app.use('/api/chats', chatRouter);
 
 //Public files
 app.use(express.static(path.join(__dirname, "public")));
-
-//Creating web http server listing on port
-const server = http.createServer(app);
-server.listen(port);
-server.on('error', function (e) {
-  // Handle your error here
-  console.log(e);
-});
-
-//Normalize port function
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-
-  if (isNaN(port)) {
-    return val;
-  }
-
-  if (port >= 0) {
-    return port;
-  }
-
-  return false;
-}
-// On listening to server function
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  console.log('Listening on ' + bind);
-}
+app.use(express.static(path.join(__dirname, "/upload")));
 
 //App listener
 app.listen(process.env.APP_PORT, () => 

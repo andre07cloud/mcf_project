@@ -37,7 +37,8 @@ exports.login = async (req, res) => {
                 {expiresIn: "3d"},
         );
             
-
+        user.active = true;
+        await user.save();
         res.status(200).json({user, accessToken});
         console.log("LOGIN SUCCESSFULY!");
     }catch(e){

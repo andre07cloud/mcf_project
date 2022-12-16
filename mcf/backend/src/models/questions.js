@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 module.exports =  QuestionSchema = new Schema(
     {
-        designation:{
+        title:{
             type: String, required:true    
         },
         point:{
@@ -13,6 +13,7 @@ module.exports =  QuestionSchema = new Schema(
         exerciceId:{
             type: Schema.ObjectId, ref: 'Exercice'
         },
+        deletedAt : {type:Date, default: null}
     },
     { timestamps: true }
 );

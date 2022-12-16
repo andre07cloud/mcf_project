@@ -12,7 +12,8 @@ const SectionSchema = new Schema(
         },
         formation:{
           type: Schema.ObjectId, ref: 'Formation'
-        }
+        },
+        deletedAt : {type:Date, default: null}
     },
     { timestamps: true }
 );

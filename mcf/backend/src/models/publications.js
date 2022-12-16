@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 module.exports =  PublicationSchema = new Schema(
     {
-        designation:{
+        title:{
             type: String, required:true    
         },
         classMessage:{
@@ -12,7 +12,8 @@ module.exports =  PublicationSchema = new Schema(
         },
         message:{
             type: String, required:true
-        }
+        },
+        deletedAt : {type:Date, default: null}
     },
     { timestamps: true }
 );

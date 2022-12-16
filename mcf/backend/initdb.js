@@ -1,11 +1,11 @@
 
 
 const User = require('./src/models/users');
-const Categorie = require('./src/models/categorie');
+// const Categorie = require('./src/models/categorie');
 const Formation = require('./src/models/formations');
-const Exercice = require('./src/models/exercices');
-const Question = require('./src/models/questions');
-const Cour = require('./src/models/cours');
+// const Exercice = require('./src/models/exercices');
+// const Question = require('./src/models/questions');
+// const Cour = require('./src/models/cours');
 
 exports.createUserInit =function () {
 
@@ -71,19 +71,19 @@ exports.createFormationInit =function () {
 			"designation":"Programmation C",
 			"description":"Programmation C pour les nulls",
 			"niveau":"Niveau 1",
-			"categorie":"62750e936443a5e551f25093"
+			"category":"62750e936443a5e551f25093"
 		},
 		{
 			"designation":"Programmation Python",
 			"description":"Programmation Python pour les nulls",
 			"niveau":"Niveau 2",
-			"categorie":"62750e936443a5e551f25094"
+			"category":"62750e936443a5e551f25094"
 		},
 		{
 			"designation":"Programmation R",
 			"description":"Programmation R pour les nulls",
 			"niveau":"Niveau 2",
-			"categorie":"62750e936443a5e551f25095"
+			"category":"62750e936443a5e551f25095"
 		}
 
 	];
@@ -115,185 +115,185 @@ exports.createFormationInit =function () {
 
 };
 
-exports.createCategorieInit =function () {
+// exports.createCategorieInit =function () {
 
-	var data=[
-		{
-			"designation":"Informatique",
-			"description":"Categorie Informatique"
-		},
-		{
-			"designation":"Gestion de projet",
-			"description":"Categorie Gestion de projet"
-		},
-		{
-			"designation":"Langue etrangere",
-			"description":"Categorie Langue"
-		}
+// 	var data=[
+// 		{
+// 			"designation":"Informatique",
+// 			"description":"Categorie Informatique"
+// 		},
+// 		{
+// 			"designation":"Gestion de projet",
+// 			"description":"Categorie Gestion de projet"
+// 		},
+// 		{
+// 			"designation":"Langue etrangere",
+// 			"description":"Categorie Langue"
+// 		}
 
-	];
-	Categorie.countDocuments({}, function (err, count) {
-		if (err){
-			console.log(err)
-		}else{
-			console.log("Count :", count)
-			if(count<3){
-				for (var element of data) {
+// 	];
+// 	Categorie.countDocuments({}, function (err, count) {
+// 		if (err){
+// 			console.log(err)
+// 		}else{
+// 			console.log("Count :", count)
+// 			if(count<3){
+// 				for (var element of data) {
 					
-				var categorie = new Categorie(element);	
+// 				var categorie = new Categorie(element);	
 
-					// Then save the user
-					categorie.save(function(err) {
-						if (err) {
-							console.log(err);
-						} else {
-							console.log('1 Category inserted');
-						}
-					});
-				  }
-			}
-			else{
-				console.log('more than 3 Categories already exits');
-			}
-		}
-	});
+// 					// Then save the user
+// 					categorie.save(function(err) {
+// 						if (err) {
+// 							console.log(err);
+// 						} else {
+// 							console.log('1 Category inserted');
+// 						}
+// 					});
+// 				  }
+// 			}
+// 			else{
+// 				console.log('more than 3 Categories already exits');
+// 			}
+// 		}
+// 	});
 
-};
+// };
 
-exports.createExerciceInit =function () {
+// exports.createExerciceInit =function () {
 
-	var data=[
-		{
-			"designation":"Informatique",
-			"description":"Exercice Informatique"
-		},
-		{
-			"designation":"Gestion de projet",
-			"description":"Exercice Gestion de projet"
-		},
-		{
-			"designation":"Langue etrangere",
-			"description":"Exercice Langue"
-		}
+// 	var data=[
+// 		{
+// 			"designation":"Informatique",
+// 			"description":"Exercice Informatique"
+// 		},
+// 		{
+// 			"designation":"Gestion de projet",
+// 			"description":"Exercice Gestion de projet"
+// 		},
+// 		{
+// 			"designation":"Langue etrangere",
+// 			"description":"Exercice Langue"
+// 		}
 
-	];
-	Exercice.countDocuments({}, function (err, count) {
-		if (err){
-			console.log(err)
-		}else{
-			console.log("Count :", count)
-			if(count<3){
-				for (var element of data) {
+// 	];
+// 	Exercice.countDocuments({}, function (err, count) {
+// 		if (err){
+// 			console.log(err)
+// 		}else{
+// 			console.log("Count :", count)
+// 			if(count<3){
+// 				for (var element of data) {
 					
-				var exercice = new Exercice(element);	
+// 				var exercice = new Exercice(element);	
 
-					// Then save the user
-					exercice.save(function(err) {
-						if (err) {
-							console.log(err);
-						} else {
-							console.log('1 Category inserted');
-						}
-					});
-				  }
-			}
-			else{
-				console.log('more than 3 Categories already exits');
-			}
-		}
-	});
+// 					// Then save the user
+// 					exercice.save(function(err) {
+// 						if (err) {
+// 							console.log(err);
+// 						} else {
+// 							console.log('1 Category inserted');
+// 						}
+// 					});
+// 				  }
+// 			}
+// 			else{
+// 				console.log('more than 3 Categories already exits');
+// 			}
+// 		}
+// 	});
 
-};
+// };
 
-exports.createQuestionInit =function () {
+// exports.createQuestionInit =function () {
 
-	var data=[
-		{
-			"designation":"Informatique",
-			"point":12
-		},
-		{
-			"designation":"Gestion de projet",
-			"point":15
-		},
-		{
-			"designation":"Langue etrangere",
-			"point":17
-		}
+// 	var data=[
+// 		{
+// 			"designation":"Informatique",
+// 			"point":12
+// 		},
+// 		{
+// 			"designation":"Gestion de projet",
+// 			"point":15
+// 		},
+// 		{
+// 			"designation":"Langue etrangere",
+// 			"point":17
+// 		}
 
-	];
-	Question.countDocuments({}, function (err, count) {
-		if (err){
-			console.log(err)
-		}else{
-			console.log("Count :", count)
-			if(count<3){
-				for (var element of data) {
+// 	];
+// 	Question.countDocuments({}, function (err, count) {
+// 		if (err){
+// 			console.log(err)
+// 		}else{
+// 			console.log("Count :", count)
+// 			if(count<3){
+// 				for (var element of data) {
 					
-				var question = new Question(element);	
+// 				var question = new Question(element);	
 
-					// Then save the user
-					question.save(function(err) {
-						if (err) {
-							console.log(err);
-						} else {
-							console.log('1 Category inserted');
-						}
-					});
-				  }
-			}
-			else{
-				console.log('more than 3 Categories already exits');
-			}
-		}
-	});
+// 					// Then save the user
+// 					question.save(function(err) {
+// 						if (err) {
+// 							console.log(err);
+// 						} else {
+// 							console.log('1 Category inserted');
+// 						}
+// 					});
+// 				  }
+// 			}
+// 			else{
+// 				console.log('more than 3 Categories already exits');
+// 			}
+// 		}
+// 	});
 
-};
+// };
 
-exports.createCourInit =function () {
+// exports.createCourInit =function () {
 
-	var data=[
-		{
-			"designation":"Informatique",
-			"fichiers":"cour1.pdf",
-			"formation":"62ab0805057b36b032368425"
-		},
-		{
-			"designation":"Gestion de projet",
-			"fichiers":"cour2.pdf",
-			"formation":"62ab0805057b36b032368425"
-		},
-		{
-			"designation":"Langue etrangere",
-			"fichiers":"cour3.pdf",
-			"formation":"62ab0805057b36b032368426"
-		}
+// 	var data=[
+// 		{
+// 			"designation":"Informatique",
+// 			"fichiers":"cour1.pdf",
+// 			"formation":"62ab0805057b36b032368425"
+// 		},
+// 		{
+// 			"designation":"Gestion de projet",
+// 			"fichiers":"cour2.pdf",
+// 			"formation":"62ab0805057b36b032368425"
+// 		},
+// 		{
+// 			"designation":"Langue etrangere",
+// 			"fichiers":"cour3.pdf",
+// 			"formation":"62ab0805057b36b032368426"
+// 		}
 
-	];
-	Cour.countDocuments({}, function (err, count) {
-		if (err){
-			console.log(err)
-		}else{
-			console.log("Count :", count)
-			if(count<3){
-				for (var element of data) {
+// 	];
+// 	Cour.countDocuments({}, function (err, count) {
+// 		if (err){
+// 			console.log(err)
+// 		}else{
+// 			console.log("Count :", count)
+// 			if(count<3){
+// 				for (var element of data) {
 					
-				var cour = new Cour(element);	
+// 				var cour = new Cour(element);	
 
-					// Then save the user
-					cour.save(function(err) {
-						if (err) {
-							console.log(err);
-						} else {
-							console.log('1 Category inserted');
-						}
-					});
-				  }
-			}
-			else{
-				console.log('more than 3 Categories already exits');
-			}
-		}
-	});
+// 					// Then save the user
+// 					cour.save(function(err) {
+// 						if (err) {
+// 							console.log(err);
+// 						} else {
+// 							console.log('1 Category inserted');
+// 						}
+// 					});
+// 				  }
+// 			}
+// 			else{
+// 				console.log('more than 3 Categories already exits');
+// 			}
+// 		}
+// 	});
 
-};
+// };

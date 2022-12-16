@@ -9,10 +9,14 @@ const createSection = async (sectionBody) => {
     return Section.create(sectionBody);
 };
 
-const updateSectionModuleById = async (sectionId, moduleId) => {
-    const section = await getSectionById(sectionId);
+const 
+updateSectionModuleById = async (sectionId, moduleId) => {
+    console.log("UUUUPPDAAATE SECTION MODULE*******: "+sectionId);
+    const section = await Section.findById(sectionId);
+    console.log("UUUUPPDAAATE SECTION MODULE 2*******: "+sectionId);
+    console.log("La SSSSEEEECCCCCTIIIIONNNN+++++: "+section);
     if (!section) {
-      await Module.findById(id).remove();
+      
       throw new ApiError(httpStatus.NOT_FOUND, 'Section not found');
     }
     section.modules.push(moduleId);
@@ -21,14 +25,28 @@ const updateSectionModuleById = async (sectionId, moduleId) => {
   };
 
   const getSectionById = async (id) => {
-    return Section.findById(id);
+    return Section.findById(id)
+            .populate({path: 'modules'})
+    ;
   };
 
   const getSections = async () => {
-    return Section.find();
+    return Section.find({deletedAt:null});
   };
 
+  const deleteSectionById = async (sectionId)=>{
+    const section = await Section.findById(sectionId);
+    section.deletedAt=true;
+    section.save();
+    return section;
+  }
 
+const getSectionByCourseId = async (courseId) => {
+  
+  const sections = await Section.find({deletedAt:null,formation: courseId}).populate({path: 'modules'});
+  console.log("Sections"+sections)
+  return sections;
+}
 
 
 
@@ -36,7 +54,7 @@ module.exports = {
     createSection,
     getSections,
     getSectionById,
-    
+    deleteSectionById,
     updateSectionModuleById,
-    
+    getSectionByCourseId
   };
